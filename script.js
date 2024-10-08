@@ -42,8 +42,12 @@ function fillCell(playerSymbol, position) {
   if (gameBoard[position] !== undefined) {
     if (gameBoard[position] === "_") {
       gameBoard[position] = playerSymbol;
+      return true;
     }
-    return true;
+    else {
+      alert("Please don't target already filled up cells");
+      return false;
+    }
   }
   else {
     alert("Please choose valid empty cell only");
@@ -61,7 +65,7 @@ function playGame() {
     if (repeater === 0) {
       if (turn % 2 === 0) {
         console.log("Player1's turn:");
-        currPlayerSym = players["player1"]
+        currPlayerSym = players["player1"];
       }
       else {
         console.log("Player2's turn:");
@@ -79,6 +83,7 @@ function playGame() {
       repeater = 1;
     }
   }
+  
 }
 
 // making the game logic
@@ -86,78 +91,30 @@ function gameLogic(board) {
   let allKeys = Object.keys(board);
   // mathc along rows
   if (board["r1c1"] !== "_" && board["r1c1"] === board["r1c2"] && board["r1c2"] === board["r1c3"]) {
-    if (board["r1c1"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r1c1"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r1c1"]];
   }
   else if (board["r2c1"] !== "_" && board["r2c1"] === board["r2c2"] && board["r2c2"] === board["r2c3"]) {
-    if (board["r2c1"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r2c1"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r2c1"]];
   }
   else if (board["r3c1"] !== "_" && board["r3c1"] === board["r3c2"] && board["r3c2"] === board["r3c3"]) {
-    if (board["r3c1"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r3c1"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r3c1"]];
   }
   // match along columns
   else if (board["r1c1"] !== "_" && board["r1c1"] === board["r2c1"] && board["r2c1"] === board["r3c1"]) {
-    if (board["r1c1"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r1c1"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r1c1"]];
   }
   else if (board["r1c2"] !== "_" && board["r1c2"] === board["r2c2"] && board["r2c2"] === board["r3c2"]) {
-    if (board["r1c2"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r1c2"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r1c2"]];
   }
   else if (board["r1c3"] !== "_" && board["r1c3"] === board["r2c3"] && board["r2c3"] === board["r3c3"]) {
-    if (board["r1c3"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r1c3"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r1c3"]];
   }
   // match along diagonals
   else if (board["r1c1"] !== "_" && board["r1c1"] === board["r2c2"] && board["r2c2"] === board["r3c3"]) {
-    if (board["r2c2"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r2c2"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r1c1"]];
   }
   else if (board["r1c3"] !== "_" && board["r1c3"] === board["r2c2"] && board["r2c2"] === board["r3c1"]) {
-    if (board["r2c2"] === players["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-    }
-    else if (board["r2c2"] === players["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-    }
-    return true;
+    return [board["r1c3"]];
   }
   // if all the cells are filled but still no matches, it means it is a draw
   else {
@@ -169,11 +126,10 @@ function gameLogic(board) {
       }
     }
     if (counter === 0) {
-      console.log("%c DRAW!!!", "color: orange; font-size: 24px;")
-      return true;
+      return ["player1", "player2"];
     }
   }
   return false;
 }
 
-playGame();
+
