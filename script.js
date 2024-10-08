@@ -58,7 +58,107 @@ function playGame() {
     currPlayerCell = prompt("Enter your target cell (e.g.- r2c3 target cell present in 2nd row at 3rd column):");
     fillCell(currPlayerSym, currPlayerCell);
     showBoard(gameBoard);
+    if (gameLogic(gameBoard)) {
+      break;
+    }
   }
+}
+
+
+
+// making the game logic
+function gameLogic(board) {
+  let allKeys = Object.keys(board);
+  // mathc along rows
+  if (board["r1c1"] !== "_" && board["r1c1"] === board["r1c2"] && board["r1c2"] === board["r1c3"]) {
+    if (board["r1c1"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r1c1"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  else if (board["r2c1"] !== "_" && board["r2c1"] === board["r2c2"] && board["r2c2"] === board["r2c3"]) {
+    if (board["r2c1"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r2c1"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  else if (board["r3c1"] !== "_" && board["r3c1"] === board["r3c2"] && board["r3c2"] === board["r3c3"]) {
+    if (board["r3c1"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r3c1"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  // match along columns
+  else if (board["r1c1"] !== "_" && board["r1c1"] === board["r2c1"] && board["r2c1"] === board["r3c1"]) {
+    if (board["r1c1"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r1c1"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  else if (board["r1c2"] !== "_" && board["r1c2"] === board["r2c2"] && board["r2c2"] === board["r3c2"]) {
+    if (board["r1c2"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r1c2"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  else if (board["r1c3"] !== "_" && board["r1c3"] === board["r2c3"] && board["r2c3"] === board["r3c3"]) {
+    if (board["r1c3"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r1c3"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  // match along diagonals
+  else if (board["r1c1"] !== "_" && board["r1c1"] === board["r2c2"] && board["r2c2"] === board["r3c3"]) {
+    if (board["r2c2"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r2c2"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  else if (board["r1c3"] !== "_" && board["r1c3"] === board["r2c2"] && board["r2c2"] === board["r3c1"]) {
+    if (board["r2c2"] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (board["r2c2"] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+    return true;
+  }
+  // if all the cells are filled but still no matches, it means it is a draw
+  else {
+    let counter = 0;
+    for (let i = 0; i < allKeys.length; i++) {
+      if (board[allKeys[i]] === "_") {
+        counter = 1;
+        break;
+      }
+    }
+    if (counter === 0) {
+      console.log("%c DRAW!!!", "color: orange; font-size: 24px;")
+      return true;
+    }
+  }
+  return false;
 }
 
 playGame()
