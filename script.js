@@ -39,32 +39,47 @@ function showBoard(board) {
 showBoard(gameBoard);
 
 function fillCell(playerSymbol, position) {
-  gameBoard[position] = playerSymbol;
-}
-
-
-function playGame() {
-  // For development phase, run the game for 9 turns to fill up entire board
-  let currPlayerSym, currPlayerCell;
-  for (let i = 0; i < 9; i++) {
-    if (i % 2 === 0) {
-      console.log("Player1's turn:");
-      currPlayerSym = players["player1"]
+  if (gameBoard[position] !== undefined) {
+    if (gameBoard[position] === "_") {
+      gameBoard[position] = playerSymbol;
     }
-    else {
-      console.log("Player2's turn:");
-      currPlayerSym = players["player2"];
-    }
-    currPlayerCell = prompt("Enter your target cell (e.g.- r2c3 target cell present in 2nd row at 3rd column):");
-    fillCell(currPlayerSym, currPlayerCell);
-    showBoard(gameBoard);
-    if (gameLogic(gameBoard)) {
-      break;
-    }
+    return true;
+  }
+  else {
+    alert("Please choose valid empty cell only");
+    return false;
   }
 }
 
 
+function playGame() {
+  let currPlayerSym, currPlayerCell;
+  let turn = 0;
+  let repeater = 0;
+  while (!gameLogic(gameBoard)) {
+    // Show the inside info in console only once
+    if (repeater === 0) {
+      if (turn % 2 === 0) {
+        console.log("Player1's turn:");
+        currPlayerSym = players["player1"]
+      }
+      else {
+        console.log("Player2's turn:");
+        currPlayerSym = players["player2"];
+      }
+    }
+  
+    currPlayerCell = prompt("Enter your target cell (e.g.- r2c3 target cell present in 2nd row at 3rd column):");
+    if (fillCell(currPlayerSym, currPlayerCell)) {
+      turn++;
+      repeater = 0;
+      showBoard(gameBoard);
+    }
+    else {
+      repeater = 1;
+    }
+  }
+}
 
 // making the game logic
 function gameLogic(board) {
@@ -161,4 +176,4 @@ function gameLogic(board) {
   return false;
 }
 
-playGame()
+playGame();
