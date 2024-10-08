@@ -13,18 +13,33 @@ For starting just make them all empty.
 5) cover all the cases for 3 in a row, 3 in a column and 3 in a diagonal to decide the final winner.
 */
 
-console.log("%c Welcome to Tic Tac Toe ", "background-color: red; color: white; font-size: 24px;");
 
-const players = {
-  player1: "X",
-  player2: "O",
-};
+// Central unit of game that has all the global variables and gives their access to different function on demand
+function gameController() {
+  const players = {
+    player1: "X",
+    player2: "O",
+  };
 
-let gameBoard = {
-  r1c1: "_", r1c2: "_", r1c3: "_",
-  r2c1: "_", r2c2: "_", r2c3: "_",
-  r3c1: "_", r3c2: "_", r3c3: "_",
+  let gameBoard = {
+    r1c1: "_", r1c2: "_", r1c3: "_",
+    r2c1: "_", r2c2: "_", r2c3: "_",
+    r3c1: "_", r3c2: "_", r3c3: "_",
+  }
+
+  console.log("%c Welcome to Tic Tac Toe ", "background-color: red; color: white; font-size: 24px;");
+  showBoard(gameBoard);
+
+  // Start the game when user clicks the button
+  const gameStartBtn = document.querySelector(".startGameBtn");
+  gameStartBtn.addEventListener("click", () => {
+    playGame(players, gameBoard);
+  });
 }
+
+
+gameController();
+
 
 function showBoard(board) {
   const allCells = Object.keys(board);
@@ -36,12 +51,10 @@ function showBoard(board) {
   }
 }
 
-showBoard(gameBoard);
-
-function fillCell(playerSymbol, position) {
-  if (gameBoard[position] !== undefined) {
-    if (gameBoard[position] === "_") {
-      gameBoard[position] = playerSymbol;
+function fillCell(board, playerSymbol, position) {
+  if (board[position] !== undefined) {
+    if (board[position] === "_") {
+      board[position] = playerSymbol;
       return true;
     }
     else {
@@ -56,7 +69,7 @@ function fillCell(playerSymbol, position) {
 }
 
 
-function playGame() {
+function playGame(players, gameBoard) {
   let currPlayerSym, currPlayerCell;
   let turn = 0;
   let repeater = 0;
@@ -74,7 +87,7 @@ function playGame() {
     }
   
     currPlayerCell = prompt("Enter your target cell (e.g.- r2c3 target cell present in 2nd row at 3rd column):");
-    if (fillCell(currPlayerSym, currPlayerCell)) {
+    if (fillCell(gameBoard, currPlayerSym, currPlayerCell)) {
       turn++;
       repeater = 0;
       showBoard(gameBoard);
@@ -83,8 +96,9 @@ function playGame() {
       repeater = 1;
     }
   }
-  showResults(gameLogic(gameBoard));
+  showResults(gameLogic(gameBoard), players);
 }
+
 
 // making the game logic
 function gameLogic(board) {
@@ -132,22 +146,17 @@ function gameLogic(board) {
   return false;
 }
 
-// Start the game when user clicks the button
-const gameStartBtn = document.querySelector(".startGameBtn");
-gameStartBtn.addEventListener("click", () => {
-  playGame();
-});
 
 // Declare results
-function showResults(player) {
+function showResults(player, allPlayers) {
   if (player.length === 2) {
     console.log("%c DRAW!!!", "color: orange; font-size: 24px;");
   }
   else {
-    if (player[0] === players["player1"]) {
+    if (player[0] === allPlayers["player1"]) {
       console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
     }
-    else if (player[0] === players["player2"]) {
+    else if (player[0] === allPlayers["player2"]) {
       console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
     }
   }
