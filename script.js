@@ -83,7 +83,7 @@ function playGame() {
       repeater = 1;
     }
   }
-  
+  showResults(gameLogic(gameBoard));
 }
 
 // making the game logic
@@ -132,4 +132,23 @@ function gameLogic(board) {
   return false;
 }
 
+// Start the game when user clicks the button
+const gameStartBtn = document.querySelector(".startGameBtn");
+gameStartBtn.addEventListener("click", () => {
+  playGame();
+});
 
+// Declare results
+function showResults(player) {
+  if (player.length === 2) {
+    console.log("%c DRAW!!!", "color: orange; font-size: 24px;");
+  }
+  else {
+    if (player[0] === players["player1"]) {
+      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+    }
+    else if (player[0] === players["player2"]) {
+      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+    }
+  }
+}
