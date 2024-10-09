@@ -34,7 +34,7 @@ function gameController() {
   }
 
   console.log("%c Welcome to Tic Tac Toe ", "background-color: red; color: white; font-size: 24px;");
-  showBoard(gameBoard);
+  // showBoard(gameBoard);
   addToDOM(gameBoard);
 
   // Start the game when user clicks the button
@@ -58,53 +58,51 @@ function showBoard(board) {
   }
 }
 
-function fillCell(board, playerSymbol, position) {
-  if (board[position] !== undefined) {
-    if (board[position] === "_") {
-      board[position] = playerSymbol;
-      return true;
-    }
-    else {
-      alert("Please don't target already filled up cells");
-      return false;
-    }
+function fillGameBoard(board, playerSymbol, position) {
+  const allCells = Object.keys(board);
+  if (board[allCells[position]] === "_") {
+    board[allCells[position]] = playerSymbol;
+    return true;
   }
   else {
-    alert("Please choose valid empty cell only");
+    alert("Please don't target already filled up cells");
     return false;
   }
 }
 
 
 function playGame(players, gameBoard) {
-  let currPlayerSym, currPlayerCell;
   let turn = 0;
-  let repeater = 0;
-  while (!gameLogic(gameBoard)) {
-    // Show the inside info in console only once
-    if (repeater === 0) {
-      if (turn % 2 === 0) {
-        console.log("Player1's turn:");
-        currPlayerSym = players["player1"];
-      }
-      else {
-        console.log("Player2's turn:");
-        currPlayerSym = players["player2"];
-      }
-    }
-  
-    currPlayerCell = prompt("Enter your target cell (e.g.- r2c3 target cell present in 2nd row at 3rd column):");
-    if (fillCell(gameBoard, currPlayerSym, currPlayerCell)) {
-      turn++;
-      repeater = 0;
-      showBoard(gameBoard);
-      addToDOM(gameBoard);
+  let currPlayerSym, currCellPos, allLi, winner;
+  const ul = document.querySelector(".gameBoard");
+
+  ul.addEventListener("click", (e) => {
+    if (turn % 2 === 0) {
+      console.log("player1's turn");
+      currPlayerSym = players["player1"];
     }
     else {
-      repeater = 1;
+      console.log("player2's turn");
+      currPlayerSym = players["player2"];
     }
-  }
-  showResults(gameLogic(gameBoard), players);
+
+    // Know the position of cell being clicked
+    allLi = ul.childNodes;
+    for (let i = 0; i < allLi.length; i++) {
+      if (allLi[i] === e.target.parentNode) {
+        currCellPos = i;
+      }
+    }
+    
+    if (fillGameBoard(gameBoard, currPlayerSym, currCellPos)) {
+      turn++;
+      addToDOM(gameBoard);
+      winner = gameLogic(gameBoard);
+      if (winner !== false) {
+        showResults(winner, players);
+      }
+    }
+  });
 }
 
 
@@ -178,6 +176,7 @@ function addToDOM(gameBoard) {
   let cell, button;
   for (let i = 0; i < allCells.length; i++) {
     cell = document.createElement("li");
+    cell.classList.add("cell" + i);
     button = document.createElement("button");
     button.innerText = gameBoard[allCells[i]];
     cell.appendChild(button);
