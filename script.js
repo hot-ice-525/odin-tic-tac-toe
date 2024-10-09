@@ -33,9 +33,11 @@ function gameController() {
     r3c1: "_", r3c2: "_", r3c3: "_",
   }
 
+  let firstTime = true;
+
   console.log("%c Welcome to Tic Tac Toe ", "background-color: red; color: white; font-size: 24px;");
   // showBoard(gameBoard);
-  addToDOM(gameBoard);
+  addToDOM(gameBoard, undefined, firstTime);
 
   // Start the game when user clicks the button
   const gameStartBtn = document.querySelector(".startGameBtn");
@@ -78,16 +80,16 @@ function playGame(players, gameBoard) {
 
   ul.addEventListener("click", (e) => {
     if (turn % 2 === 0) {
-      console.log("player1's turn");
       currPlayerSym = players["player1"];
+      e.target.classList.add("player1");
     }
     else {
-      console.log("player2's turn");
       currPlayerSym = players["player2"];
+      e.target.classList.add("player2");
     }
 
     // Know the position of cell being clicked
-    allLi = ul.childNodes;
+    allLi = ul.children;
     for (let i = 0; i < allLi.length; i++) {
       if (allLi[i] === e.target.parentNode) {
         currCellPos = i;
@@ -95,12 +97,13 @@ function playGame(players, gameBoard) {
     }
     
     if (fillGameBoard(gameBoard, currPlayerSym, currCellPos)) {
-      turn++;
-      addToDOM(gameBoard);
+      addToDOM(gameBoard, currCellPos, false);
+
       winner = gameLogic(gameBoard);
       if (winner !== false) {
         showResults(winner, players);
       }
+      turn++;
     }
   });
 }
@@ -109,7 +112,7 @@ function playGame(players, gameBoard) {
 // making the game logic
 function gameLogic(board) {
   let allKeys = Object.keys(board);
-  // mathc along rows
+  // match along rows
   if (board["r1c1"] !== "_" && board["r1c1"] === board["r1c2"] && board["r1c2"] === board["r1c3"]) {
     return [board["r1c1"]];
   }
@@ -169,17 +172,22 @@ function showResults(player, allPlayers) {
 }
 
 // Add gameBoard to DOM
-function addToDOM(gameBoard) {
+function addToDOM(gameBoard, cellIndex, firstTime) {
   const ul = document.querySelector(".gameBoard");
-  ul.innerHTML = "";
   const allCells = Object.keys(gameBoard);
-  let cell, button;
-  for (let i = 0; i < allCells.length; i++) {
-    cell = document.createElement("li");
-    cell.classList.add("cell" + i);
-    button = document.createElement("button");
-    button.innerText = gameBoard[allCells[i]];
-    cell.appendChild(button);
-    ul.appendChild(cell);
+  if (firstTime) {
+    let cell, button;
+    for (let i = 0; i < allCells.length; i++) {
+      cell = document.createElement("li");
+      cell.classList.add("cell" + i);
+      button = document.createElement("button");
+      console.log(gameBoard[allCells[i]]);
+      button.innerText = gameBoard[allCells[i]];
+      cell.appendChild(button);
+      ul.appendChild(cell);
+    }
+  }
+  else {
+    ul.children[cellIndex].children[0].innerText = gameBoard[allCells[cellIndex]];
   }
 }

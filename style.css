@@ -26,3 +26,15 @@ ul li {
   width: 100%;
   font-size: 64px;
 }
+
+.gameBoard button[class="player1"] {
+  background-color: lightblue;
+  color: white;
+  border: none;
+}
+
+.gameBoard button[class="player2"] {
+  background-color: lightgreen;
+  color: white;
+  border: none;
+}
