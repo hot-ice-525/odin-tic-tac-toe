@@ -28,9 +28,9 @@ function gameController() {
   };
 
   let gameBoard = {
-    r1c1: "_", r1c2: "_", r1c3: "_",
-    r2c1: "_", r2c2: "_", r2c3: "_",
-    r3c1: "_", r3c2: "_", r3c3: "_",
+    r1c1: "", r1c2: "", r1c3: "",
+    r2c1: "", r2c2: "", r2c3: "",
+    r3c1: "", r3c2: "", r3c3: "",
   }
 
   let firstTime = true;
@@ -62,7 +62,7 @@ function showBoard(board) {
 
 function fillGameBoard(board, playerSymbol, position) {
   const allCells = Object.keys(board);
-  if (board[allCells[position]] === "_") {
+  if (board[allCells[position]] === "") {
     board[allCells[position]] = playerSymbol;
     return true;
   }
@@ -81,11 +81,9 @@ function playGame(players, gameBoard) {
   ul.addEventListener("click", (e) => {
     if (turn % 2 === 0) {
       currPlayerSym = players["player1"];
-      e.target.classList.add("player1");
     }
     else {
       currPlayerSym = players["player2"];
-      e.target.classList.add("player2");
     }
 
     // Know the position of cell being clicked
@@ -98,6 +96,14 @@ function playGame(players, gameBoard) {
     
     if (fillGameBoard(gameBoard, currPlayerSym, currCellPos)) {
       addToDOM(gameBoard, currCellPos, false);
+
+      // For styling purposes
+      if (turn % 2 === 0) {
+        e.target.classList.add("player1");
+      }
+      else {
+        e.target.classList.add("player2");
+      }
 
       winner = gameLogic(gameBoard);
       if (winner !== false) {
@@ -113,37 +119,37 @@ function playGame(players, gameBoard) {
 function gameLogic(board) {
   let allKeys = Object.keys(board);
   // match along rows
-  if (board["r1c1"] !== "_" && board["r1c1"] === board["r1c2"] && board["r1c2"] === board["r1c3"]) {
+  if (board["r1c1"] !== "" && board["r1c1"] === board["r1c2"] && board["r1c2"] === board["r1c3"]) {
     return [board["r1c1"]];
   }
-  else if (board["r2c1"] !== "_" && board["r2c1"] === board["r2c2"] && board["r2c2"] === board["r2c3"]) {
+  else if (board["r2c1"] !== "" && board["r2c1"] === board["r2c2"] && board["r2c2"] === board["r2c3"]) {
     return [board["r2c1"]];
   }
-  else if (board["r3c1"] !== "_" && board["r3c1"] === board["r3c2"] && board["r3c2"] === board["r3c3"]) {
+  else if (board["r3c1"] !== "" && board["r3c1"] === board["r3c2"] && board["r3c2"] === board["r3c3"]) {
     return [board["r3c1"]];
   }
   // match along columns
-  else if (board["r1c1"] !== "_" && board["r1c1"] === board["r2c1"] && board["r2c1"] === board["r3c1"]) {
+  else if (board["r1c1"] !== "" && board["r1c1"] === board["r2c1"] && board["r2c1"] === board["r3c1"]) {
     return [board["r1c1"]];
   }
-  else if (board["r1c2"] !== "_" && board["r1c2"] === board["r2c2"] && board["r2c2"] === board["r3c2"]) {
+  else if (board["r1c2"] !== "" && board["r1c2"] === board["r2c2"] && board["r2c2"] === board["r3c2"]) {
     return [board["r1c2"]];
   }
-  else if (board["r1c3"] !== "_" && board["r1c3"] === board["r2c3"] && board["r2c3"] === board["r3c3"]) {
+  else if (board["r1c3"] !== "" && board["r1c3"] === board["r2c3"] && board["r2c3"] === board["r3c3"]) {
     return [board["r1c3"]];
   }
   // match along diagonals
-  else if (board["r1c1"] !== "_" && board["r1c1"] === board["r2c2"] && board["r2c2"] === board["r3c3"]) {
+  else if (board["r1c1"] !== "" && board["r1c1"] === board["r2c2"] && board["r2c2"] === board["r3c3"]) {
     return [board["r1c1"]];
   }
-  else if (board["r1c3"] !== "_" && board["r1c3"] === board["r2c2"] && board["r2c2"] === board["r3c1"]) {
+  else if (board["r1c3"] !== "" && board["r1c3"] === board["r2c2"] && board["r2c2"] === board["r3c1"]) {
     return [board["r1c3"]];
   }
   // if all the cells are filled but still no matches, it means it is a draw
   else {
     let counter = 0;
     for (let i = 0; i < allKeys.length; i++) {
-      if (board[allKeys[i]] === "_") {
+      if (board[allKeys[i]] === "") {
         counter = 1;
         break;
       }
@@ -158,6 +164,7 @@ function gameLogic(board) {
 
 // Declare results
 function showResults(player, allPlayers) {
+  // const ul = document.querySelector(".gameBoard");
   if (player.length === 2) {
     console.log("%c DRAW!!!", "color: orange; font-size: 24px;");
   }

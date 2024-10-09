@@ -10,6 +10,20 @@ h1 {
 
 body {
   background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.startGameBtn {
+  margin-top: 60px;
+  height: 60px;
+  width: 200px;
+  font-size: 16px;
+  background-color: teal;
+  color: white;
+  border: 1px solid teal;
+  border-radius: 10px;
 }
 
 ul li {
@@ -18,8 +32,19 @@ ul li {
 
 .gameBoard {
   display: grid;
-  grid-template: 100px 100px 100px / 100px 100px 100px
+  grid-template: repeat(3, 126px) / repeat(3, 126px);
+  margin-top: 120px;
+  position: relative;
 }
+
+/* .gameBoard::before {
+  opacity: 0;
+  content: "Player1 won";
+  position: absolute;
+  left: 150px;
+  top: 165px;
+  font-size: 32px;
+} */
 
 .gameBoard button {
   height: 100%;
@@ -30,11 +55,11 @@ ul li {
 .gameBoard button[class="player1"] {
   background-color: lightblue;
   color: white;
-  border: none;
+  border: 1px solid gray;
 }
 
 .gameBoard button[class="player2"] {
   background-color: lightgreen;
   color: white;
-  border: none;
+  border: 1px solid gray;
 }
