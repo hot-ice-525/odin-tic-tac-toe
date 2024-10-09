@@ -107,7 +107,8 @@ function playGame(players, gameBoard) {
 
       winner = gameLogic(gameBoard);
       if (winner !== false) {
-        showResults(winner, players);
+        showResults(winner, players, gameBoard);
+        return;
       }
       turn++;
     }
@@ -163,17 +164,37 @@ function gameLogic(board) {
 
 
 // Declare results
-function showResults(player, allPlayers) {
-  // const ul = document.querySelector(".gameBoard");
+function showResults(player, allPlayers, board) {
+  const ul = document.querySelector(".gameBoard");
+  const allLi = ul.children;
   if (player.length === 2) {
-    console.log("%c DRAW!!!", "color: orange; font-size: 24px;");
+    // console.log("%c DRAW!!!", "color: orange; font-size: 24px;");
+    gameOver(board);
+    ul.classList.add("draw");
+    // Color the entire ul with draw's color
+    for (let i = 0; i < allLi.length; i++) {
+      allLi[i].children[0].classList.add("winnerNone");
+    }
   }
   else {
     if (player[0] === allPlayers["player1"]) {
-      console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+      // console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
+      gameOver(board);
+      ul.classList.add("player1won");
+      // Color the entire ul with player1's color
+      for (let i = 0; i < allLi.length; i++) {
+        allLi[i].children[0].classList.add("winnerPlayer1");
+      }
+      
     }
     else if (player[0] === allPlayers["player2"]) {
-      console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+      // console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
+      gameOver(board);
+      ul.classList.add("player2won");
+      // Color the entire ul with player2's color
+      for (let i = 0; i < allLi.length; i++) {
+        allLi[i].children[0].classList.add("winnerPlayer2");
+      }
     }
   }
 }
@@ -196,5 +217,23 @@ function addToDOM(gameBoard, cellIndex, firstTime) {
   }
   else {
     ul.children[cellIndex].children[0].innerText = gameBoard[allCells[cellIndex]];
+  }
+}
+
+
+// When game is over, reset everything
+function gameOver(board) {
+  // Empty the gameBoard array
+  const allCells = Object.keys(board);
+  for (let i = 0; i < allCells.length; i++) {
+    board[allCells[i]] = "";
+  }
+
+  // Empty the gamboard in DOM
+  const ul = document.querySelector(".gameBoard");
+  const allLi = ul.children;
+  for (let i = 0; i < allLi.length; i++) {
+    allLi[i].children[0].innerText = "";
+    allLi[i].children[0].classList = "";
   }
 }

@@ -37,14 +37,44 @@ ul li {
   position: relative;
 }
 
-/* .gameBoard::before {
-  opacity: 0;
-  content: "Player1 won";
+.gameBoard.draw::before {
+  content: "DRAW";
+  position: absolute;
+  left: 175px;
+  top: 165px;
+  font-size: 32px;
+}
+
+.gameBoard button[class="winnerNone"] {
+  background-color: orange;
+  border: none;
+}
+
+.gameBoard.player1won::before {
+  content: "Player1 WON";
   position: absolute;
   left: 150px;
   top: 165px;
   font-size: 32px;
-} */
+}
+
+.gameBoard button[class="winnerPlayer1"] {
+  background-color: lightblue;
+  border: none;
+}
+
+.gameBoard.player2won::before {
+  content: "Player2 WON";
+  position: absolute;
+  left: 150px;
+  top: 165px;
+  font-size: 32px;
+}
+
+.gameBoard button[class="winnerPlayer2"] {
+  background-color: lightgreen;
+    border: none;
+}
 
 .gameBoard button {
   height: 100%;
