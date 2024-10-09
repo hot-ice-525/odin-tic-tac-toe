@@ -10,7 +10,13 @@ For starting just make them all empty.
 
 5) after each player's turn, show the entire grid with current status of the game.
 
-5) cover all the cases for 3 in a row, 3 in a column and 3 in a diagonal to decide the final winner.
+6) cover all the cases for 3 in a row, 3 in a column and 3 in a diagonal to decide the final winner.
+
+<---------Console Game Completed------------->
+
+7) think of some method to display gameBoard in the DOM
+
+8) Make the game to be played using clicks
 */
 
 
@@ -29,6 +35,7 @@ function gameController() {
 
   console.log("%c Welcome to Tic Tac Toe ", "background-color: red; color: white; font-size: 24px;");
   showBoard(gameBoard);
+  addToDOM(gameBoard);
 
   // Start the game when user clicks the button
   const gameStartBtn = document.querySelector(".startGameBtn");
@@ -91,6 +98,7 @@ function playGame(players, gameBoard) {
       turn++;
       repeater = 0;
       showBoard(gameBoard);
+      addToDOM(gameBoard);
     }
     else {
       repeater = 1;
@@ -159,5 +167,20 @@ function showResults(player, allPlayers) {
     else if (player[0] === allPlayers["player2"]) {
       console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
     }
+  }
+}
+
+// Add gameBoard to DOM
+function addToDOM(gameBoard) {
+  const ul = document.querySelector(".gameBoard");
+  ul.innerHTML = "";
+  const allCells = Object.keys(gameBoard);
+  let cell, button;
+  for (let i = 0; i < allCells.length; i++) {
+    cell = document.createElement("li");
+    button = document.createElement("button");
+    button.innerText = gameBoard[allCells[i]];
+    cell.appendChild(button);
+    ul.appendChild(cell);
   }
 }
