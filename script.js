@@ -79,7 +79,14 @@ function playGame(players, gameBoard) {
     allLiBtn.forEach((btn) => {
       btn.classList.add("gameStarted");
     });
+
+    // Remove any extra classes
     ul.classList = ul.classList[0];
+
+    // Make the ul clickable
+    if (ul.hasAttribute("style")) {
+      ul.removeAttribute("style");
+    }
   });
 
   let turn = 0;
@@ -121,7 +128,7 @@ function playGame(players, gameBoard) {
       winner = gameLogic(gameBoard);
       if (winner !== false) {
         showResults(winner, players, gameBoard);
-        return;
+        gameOver();
       }
       turn++;
     }
@@ -248,4 +255,10 @@ function resetBoard(board) {
     allLi[i].children[0].innerText = "";
     allLi[i].children[0].classList = "";
   }
+}
+
+
+function gameOver() {
+  const ul = document.querySelector("ul");
+  ul.style["pointer-events"] = "none";
 }
