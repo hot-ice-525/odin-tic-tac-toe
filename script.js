@@ -40,8 +40,12 @@ function gameController() {
   addToDOM(gameBoard, undefined, firstTime);
 
   // Start the game when user clicks the button
+  const allLi = document.querySelectorAll(".gameBoard > li > button");
   const gameStartBtn = document.querySelector(".startGameBtn");
   gameStartBtn.addEventListener("click", () => {
+    allLi.forEach((btn) => {
+      btn.classList.add("gameStarted");
+    });
     playGame(players, gameBoard);
   });
 }
@@ -100,9 +104,15 @@ function playGame(players, gameBoard) {
       // For styling purposes
       if (turn % 2 === 0) {
         e.target.classList.add("player1");
+        if (e.target.classList.contains("gameStarted")) {
+          e.target.classList.remove("gameStarted");
+        }
       }
       else {
         e.target.classList.add("player2");
+        if (e.target.classList.contains("gameStarted")) {
+          e.target.classList.remove("gameStarted");
+        }
       }
 
       winner = gameLogic(gameBoard);

@@ -30,11 +30,35 @@ ul li {
   list-style: none;
 }
 
+
+
 .gameBoard {
   display: grid;
   grid-template: repeat(3, 126px) / repeat(3, 126px);
   margin-top: 120px;
   position: relative;
+}
+
+.gameBoard button {
+  height: 100%;
+  width: 100%;
+  font-size: 64px;
+}
+
+.gameBoard button[class="gameStarted"] {
+  background-color: cyan; 
+}
+
+.gameBoard button[class="player1"] {
+  background-color: lightblue;
+  color: white;
+  border: 1px solid gray;
+}
+
+.gameBoard button[class="player2"] {
+  background-color: lightgreen;
+  color: white;
+  border: 1px solid gray;
 }
 
 .gameBoard.draw::before {
@@ -74,22 +98,4 @@ ul li {
 .gameBoard button[class="winnerPlayer2"] {
   background-color: lightgreen;
     border: none;
-}
-
-.gameBoard button {
-  height: 100%;
-  width: 100%;
-  font-size: 64px;
-}
-
-.gameBoard button[class="player1"] {
-  background-color: lightblue;
-  color: white;
-  border: 1px solid gray;
-}
-
-.gameBoard button[class="player2"] {
-  background-color: lightgreen;
-  color: white;
-  border: 1px solid gray;
 }
