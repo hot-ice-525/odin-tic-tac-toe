@@ -48,7 +48,11 @@ body {
 .startGameBtn[disabled] {
   background-color: gray;
   opacity: 0.6;
+  border: 1px solid gray;
   color: silver;
+  height: 60px;
+  width: 200px;
+  margin-left: 60px;
 }
 
 .restartBtn {
