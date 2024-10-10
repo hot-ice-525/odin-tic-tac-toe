@@ -33,6 +33,18 @@ body {
   border: 1px solid rgb(0, 128, 66);;
 }
 
+.startGameBtn:hover {
+  background-color: rgb(0, 81, 42);
+}
+
+.startGameBtn:active {
+  background-color: rgb(13, 103, 59);
+  height: 59px;
+  width: 199px;
+  margin-left: 61px;
+
+}
+
 .startGameBtn[disabled] {
   background-color: gray;
   opacity: 0.6;
@@ -43,6 +55,17 @@ body {
   background-color: red;
   color: white;
   border: 1px solid red;
+}
+
+.restartBtn:hover {
+  background-color: rgb(207, 5, 5);
+}
+
+.restartBtn:active {
+  background-color: rgb(227, 31, 31);
+  height: 59px;
+  width: 199px;
+  margin-left: 61px;
 }
 
 ul li {
