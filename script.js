@@ -35,15 +35,13 @@ function gameController() {
 
   let firstTime = true;
 
-  console.log("%c Welcome to Tic Tac Toe ", "background-color: red; color: white; font-size: 24px;");
-  // showBoard(gameBoard);
   addToDOM(gameBoard, undefined, firstTime);
 
   // Start the game when user clicks the button
-  const allLi = document.querySelectorAll(".gameBoard > li > button");
+  const allLiBtn = document.querySelectorAll(".gameBoard > li > button");
   const gameStartBtn = document.querySelector(".startGameBtn");
   gameStartBtn.addEventListener("click", () => {
-    allLi.forEach((btn) => {
+    allLiBtn.forEach((btn) => {
       btn.classList.add("gameStarted");
     });
     playGame(players, gameBoard);
@@ -53,16 +51,6 @@ function gameController() {
 
 gameController();
 
-
-function showBoard(board) {
-  const allCells = Object.keys(board);
-  console.log("<--------------------------->");
-  for (let i = 0; i < 3; i++) {
-    let a = (3 * i);
-    console.log(`${board[allCells[a]]}   ${board[allCells[a + 1]]}   ${board[allCells[a + 2]]}`);
-    console.log("");
-  }
-}
 
 function fillGameBoard(board, playerSymbol, position) {
   const allCells = Object.keys(board);
@@ -78,9 +66,24 @@ function fillGameBoard(board, playerSymbol, position) {
 
 
 function playGame(players, gameBoard) {
+  const ul = document.querySelector(".gameBoard");
+
+  const gameStartBtn = document.querySelector(".startGameBtn");
+  gameStartBtn.disabled = true;
+
+  const restartBtn = document.querySelector(".restartBtn");
+  restartBtn.addEventListener("click", () => {
+    resetBoard(gameBoard);
+    turn = 0;
+    const allLiBtn = document.querySelectorAll(".gameBoard > li > button");
+    allLiBtn.forEach((btn) => {
+      btn.classList.add("gameStarted");
+    });
+    ul.classList = ul.classList[0];
+  });
+
   let turn = 0;
   let currPlayerSym, currCellPos, allLi, winner;
-  const ul = document.querySelector(".gameBoard");
 
   ul.addEventListener("click", (e) => {
     if (turn % 2 === 0) {
@@ -101,7 +104,7 @@ function playGame(players, gameBoard) {
     if (fillGameBoard(gameBoard, currPlayerSym, currCellPos)) {
       addToDOM(gameBoard, currCellPos, false);
 
-      // For styling purposes
+      // For styling purposes 
       if (turn % 2 === 0) {
         e.target.classList.add("player1");
         if (e.target.classList.contains("gameStarted")) {
@@ -179,7 +182,7 @@ function showResults(player, allPlayers, board) {
   const allLi = ul.children;
   if (player.length === 2) {
     // console.log("%c DRAW!!!", "color: orange; font-size: 24px;");
-    gameOver(board);
+    resetBoard(board);
     ul.classList.add("draw");
     // Color the entire ul with draw's color
     for (let i = 0; i < allLi.length; i++) {
@@ -189,7 +192,7 @@ function showResults(player, allPlayers, board) {
   else {
     if (player[0] === allPlayers["player1"]) {
       // console.log("%c Player1 WON!!!", "color: blue; font-size: 24px;");
-      gameOver(board);
+      resetBoard(board);
       ul.classList.add("player1won");
       // Color the entire ul with player1's color
       for (let i = 0; i < allLi.length; i++) {
@@ -199,7 +202,7 @@ function showResults(player, allPlayers, board) {
     }
     else if (player[0] === allPlayers["player2"]) {
       // console.log("%c Player2 WON!!!", "color: green; font-size: 24px;");
-      gameOver(board);
+      resetBoard(board);
       ul.classList.add("player2won");
       // Color the entire ul with player2's color
       for (let i = 0; i < allLi.length; i++) {
@@ -219,7 +222,6 @@ function addToDOM(gameBoard, cellIndex, firstTime) {
       cell = document.createElement("li");
       cell.classList.add("cell" + i);
       button = document.createElement("button");
-      console.log(gameBoard[allCells[i]]);
       button.innerText = gameBoard[allCells[i]];
       cell.appendChild(button);
       ul.appendChild(cell);
@@ -232,7 +234,7 @@ function addToDOM(gameBoard, cellIndex, firstTime) {
 
 
 // When game is over, reset everything
-function gameOver(board) {
+function resetBoard(board) {
   // Empty the gameBoard array
   const allCells = Object.keys(board);
   for (let i = 0; i < allCells.length; i++) {

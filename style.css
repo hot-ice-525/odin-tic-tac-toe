@@ -9,21 +9,40 @@ h1 {
 }
 
 body {
-  background-color: grey;
+  background-color: wheat;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.startGameBtn {
+.startGameBtn,
+.restartBtn {
+  display: inline-block;
   margin-top: 60px;
+  margin-left: 60px;
   height: 60px;
   width: 200px;
   font-size: 16px;
-  background-color: teal;
-  color: white;
-  border: 1px solid teal;
+  font-weight: bold;
   border-radius: 10px;
+}
+
+.startGameBtn {
+  background-color: rgb(0, 128, 66);
+  color: white;
+  border: 1px solid rgb(0, 128, 66);;
+}
+
+.startGameBtn[disabled] {
+  background-color: gray;
+  opacity: 0.6;
+  color: silver;
+}
+
+.restartBtn {
+  background-color: red;
+  color: white;
+  border: 1px solid red;
 }
 
 ul li {
@@ -35,7 +54,7 @@ ul li {
 .gameBoard {
   display: grid;
   grid-template: repeat(3, 126px) / repeat(3, 126px);
-  margin-top: 120px;
+  margin-top: 100px;
   position: relative;
 }
 
@@ -46,7 +65,8 @@ ul li {
 }
 
 .gameBoard button[class="gameStarted"] {
-  background-color: cyan; 
+  background-color: thistle;  /*rosybrown*/
+  border: 1px solid gray;
 }
 
 .gameBoard button[class="player1"] {
